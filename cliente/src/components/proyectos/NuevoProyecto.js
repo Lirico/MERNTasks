@@ -5,16 +5,18 @@ const NuevoProyecto = () => {
 
     // Obtener el state del formulario
     const proyectosContext = useContext(proyectoContext);
-    const { formulario, errorformulario, mostrarFormulario, agregarProyecto, mostrarError } = proyectosContext;
+    const { formulario, errorformulario,  mostrarFormulario, agregarProyecto, mostrarError } = proyectosContext;
+
 
     // State para Proyecto
-    const [ proyecto, guardarProyecto] = useState({
+    const [proyecto, guardarProyecto] = useState({
         nombre: ''
     });
 
     // Extraer nombre de proyecto
     const { nombre } = proyecto;
 
+    // Lee los contenidos del input
     const onChangeProyecto = e => {
         guardarProyecto({
             ...proyecto,
@@ -27,7 +29,7 @@ const NuevoProyecto = () => {
         e.preventDefault();
 
         // Validar el proyecto
-        if (nombre === '') {
+        if(nombre === '') {
             mostrarError();
             return;
         }
@@ -40,16 +42,15 @@ const NuevoProyecto = () => {
             nombre: ''
         })
     }
-    
+
     // Mostrar el formulario
     const onClickFormulario = () => {
         mostrarFormulario();
     }
-    
 
     return ( 
         <Fragment>
-            <button
+            <button 
                 type="button"
                 className="btn btn-block btn-primario"
                 onClick={ onClickFormulario }
@@ -70,14 +71,16 @@ const NuevoProyecto = () => {
                                 onChange={onChangeProyecto}
                             />
 
-                            <input
+                            <input 
                                 type="submit"
                                 className="btn btn-primario btn-block"
-                                value="Agregar Proyecto" 
+                                value="Agregar Proyecto"
                             />
+
                         </form>
-                    ) : null }
-                { errorformulario ? <p className="mensaje error">El nombre del Proyecto es obligatorio</p> : null }
+                ) : null }
+
+            { errorformulario ? <p className="mensaje error">El nombre del Proyecto es obligatorio</p>  : null }
         </Fragment>
      );
 }

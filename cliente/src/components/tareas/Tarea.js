@@ -4,45 +4,46 @@ import tareaContext from '../../context/tareas/tareaContext';
 
 const Tarea = ({tarea}) => {
 
-     // Extraer si un proyectoe está activo
-     const proyectosContext = useContext(proyectoContext);
-     const { proyecto } = proyectosContext;
+    // Extrar si un proyecto esta activo
+    const proyectosContext = useContext(proyectoContext);
+    const { proyecto } = proyectosContext;
 
-     // obtener la función del context de tarea
-     const tareasContext = useContext(tareaContext);
-     const { eliminarTarea, obtenerTareas, cambiarEstadoTarea, guardarTareaActual } = tareasContext;
+    // obtener la función del context de tarea
+    const tareasContext = useContext(tareaContext);
+    const { eliminarTarea, obtenerTareas, actualizarTarea, guardarTareaActual } = tareasContext;
 
-     // Extraer el proyecto
-     const [proyectoActual] = proyecto;
 
-     // Función que se ejecuta cuandl el usuario presiona el btn de eliminar tarea
-     const tareaEliminar = id => {
-        eliminarTarea(id);
+    // Extraer el proyecto
+    const [proyectoActual] = proyecto;
+ 
+    // Función que se ejecuta cuando el usuario presiona el btn de eliminar tarea
+    const tareaEliminar = id => {
+        eliminarTarea(id, proyectoActual._id);
         obtenerTareas(proyectoActual.id)
-     }
+    }
 
-     // Función que modifica el estado de las tareas
-     const cambiarEstado = tarea => {
+    // Función que modifica el estado de las tareas
+    const cambiarEstado = tarea => {
         if(tarea.estado) {
             tarea.estado = false;
         } else {
             tarea.estado = true
         }
-        cambiarEstadoTarea(tarea);
-     }
-    
-    // Agrega una función actual cuando el usuario desea editarla
+        actualizarTarea(tarea);
+    }
+
+    // Agrega una tarea actual cuando el usuario desea editarla
     const seleccionarTarea = tarea => {
         guardarTareaActual(tarea);
     }
 
     return ( 
         <li className="tarea sombra">
-            <p>{tarea.nombre}</p>
+            <p>{tarea.nombre} </p>
 
             <div className="estado">
-                {tarea.estado
-                ?
+                {tarea.estado 
+                ?  
                     (
                         <button
                             type="button"
@@ -50,7 +51,7 @@ const Tarea = ({tarea}) => {
                             onClick={() => cambiarEstado(tarea)}
                         >Completo</button>
                     )
-                :
+                : 
                     (
                         <button
                             type="button"
@@ -62,7 +63,7 @@ const Tarea = ({tarea}) => {
             </div>
 
             <div className="acciones">
-                <button
+                <button 
                     type="button"
                     className="btn btn-primario"
                     onClick={() => seleccionarTarea(tarea) }
@@ -71,7 +72,7 @@ const Tarea = ({tarea}) => {
                 <button
                     type="button"
                     className="btn btn-secundario"
-                    onClick={() => tareaEliminar(tarea.id) }
+                    onClick={() => tareaEliminar(tarea._id)}
                 >Eliminar</button>
             </div>
         </li>
